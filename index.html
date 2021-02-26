@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QuikNode Explorer</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Styles -->
+    <style>
+      body {
+        padding-top: 15px;
+      }
+      h1 {
+        margin: 15px 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center" >
+          <img src="img/logo.png" alt="logo">
+          <h1>QuikNode Explorer</h1>
+          
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="input-search" placeholder="Tx / Block / Address" aria-label="Tx / Block / Address" aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search();">Button</button>
+            </div>
+          </div>
+
+          <div id="block">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Web3 -->
+    <script src="js/web3.min.js"></script>
+    <script>
+      var provider = 'http://10.10.0.7:8545'; // Add your quiknode HTTP provider link here
+      var web3Provider = new Web3.providers.HttpProvider(provider);
+      var web3 = new Web3(web3Provider);
+
+
+
+      function search() {
+        var search = $('#input-search').val();
+
+        var block = web3.eth.getBlock(search, function (error, block) {
+
+            if(error){
+              console.log(error);              
+            }
+
+            if(block){
+              $('#block').html('');
+              $('#block').html(`<div class="card">
+                                  <div class="card-body" style="text-align:left">
+                                    <h5 class="card-title">Bloque</h5>
+                                    <hr>
+                                    <p><b>number</b> `+block.number+`</p>
+                                    <p><b>hash</b> `+block.hash+`</p>
+                                    <p><b>gasLimit</b> `+block.gasLimit+`</p>
+                                    <p><b>gasUsed</b> `+block.gasUsed+`</p>
+                                    <p><b>logsBloom</b> `+block.logsBloom+`</p>
+                                    <p><b>miner</b> `+block.miner+`</p>
+                                    <p><b>mixHash</b> `+block.mixHash+`</p>
+                                    <p><b>nonce</b> `+block.nonce+`</p>
+                                    <p><b>parentHash</b> `+block.parentHash+`</p>
+                                    <p><b>receiptsRoot</b> `+block.receiptsRoot+`</p>
+                                    <p><b>sha3Uncles</b> `+block.sha3Uncles+`</p>
+                                    <p><b>size</b> `+block.size+`</p>
+                                    <p><b>stateRoot</b> `+block.stateRoot+`</p>
+                                    <p><b>transactionsRoot</b> `+block.transactionsRoot+`</p>
+                                  </div>
+                                </div>`);
+            } else {
+              var tx = web3.eth.getTransaction(search, function (error, tx) {
+
+                if(error){
+                  console.log(error);                  
+                }
+
+                $('#block').html('');
+                $('#block').html(`<div class="card">
+                                  <div class="card-body" style="text-align:left">
+                                    <h5 class="card-title">Transacción</h5>
+                                    <hr>
+                                    <p><b>hash</b> `+tx.hash+`</p>
+                                    <p><b>nonce</b> `+tx.nonce+`</p>
+                                    <p><b>blockHash</b> `+tx.blockHash+`</p>
+                                    <p><b>blockNumber</b> `+tx.blockNumber+`</p>
+                                    <p><b>transactionIndex</b> `+tx.transactionIndex+`</p>
+                                    <p><b>from</b> `+tx.from+`</p>
+                                    <p><b>to</b> `+tx.to+`</p>
+                                    <p><b>value</b> `+tx.value+`</p>
+                                    <p><b>gas</b> `+tx.gas+`</p>
+                                    <p><b>gasPrice</b> `+tx.gasPrice+`</p>
+                                    <p><b>input</b> `+tx.input+`</p>
+                                    
+                                  </div>
+                                </div>`); 
+
+
+            });
+            }
+          
+        });
+
+        
+
+      }
+
+
+      function sendTx() {
+        // using the promise
+        web3.eth.sendTransaction({
+            from: '0xDd7D010167cb327A7747264D619C4FAe2EDfab8c',
+            to: '0x7048e57dad5aEbfB2846862e082b1f2544672568',
+            value: '1000000000000000'
+        })
+        .then(function(receipt){
+            console.log(receipt);
+        });
+      }
+    </script>
+  </body>
+</html>

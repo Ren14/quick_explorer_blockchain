@@ -1,0 +1,32 @@
+{
+  "name": "quik_explorer",
+  "version": "1.0.0",
+  "description": "Explorador rápido de bloques de la Testnet BFA",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dappuniversity/quiknode_explorer.git"
+  },
+  "keywords": [
+    "explorer",
+    "bfa",
+    "quick"
+  ],
+  "author": "Renzo Ontivero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dappuniversity/quiknode_explorer/issues"
+  },
+  "homepage": "https://github.com/dappuniversity/quiknode_explorer#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.4",
+    "pm2": "^4.1.2",
+    "web3": "^1.2.1"
+  }
+}
